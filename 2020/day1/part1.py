@@ -9,10 +9,3 @@ for i in range(len(l)):
         if l[i] + l[j] == 2020:
             print("%d*%d = %d" % (l[i], l[j], l[i] * l[j]))
             break
-
-for i in range(len(l)):
-    for j in range(i + 1, len(l)):
-        for k in range(j + 1, len(l)):
-            if l[i] + l[j] + l[k] == 2020:
-                print("%d*%d*%d = %d" % (l[i], l[j], l[k], l[i] * l[j] * l[k]))
-                break
