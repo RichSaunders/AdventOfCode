@@ -1,39 +1,48 @@
+import copy
+
 with open("input.txt", "r") as f:
     input = f.read()
 
-def flipInstruction(instructions, n):
-    if instructions[n][0] == "jmp":
-        instructions[n][0] = "nop"
-    elif instructions[n][0] == "nop":
-        instructions[n][0] = "jmp"
+def execute(instructions, log, i, accumulator, first):
+    while i < len(instructions):
+        if log[i] is True:
+            break
+        log[i] = True
+
+        instruction = instructions[i]
+
+        if instructions[i][0] == "acc":
+            accumulator += instruction[1]
+            i += 1
+
+        elif instructions[i][0] == "jmp":
+            if first:
+                instructions2 = copy.deepcopy(instructions)
+                instructions2[i][0] = "nop"
+                result = execute(instructions2, copy.deepcopy(log), i+1, accumulator, False)
+                if result is not None:
+                    return result
+
+            i += instruction[1]
+
+        elif instructions[i][0] == "nop":
+            if first:
+                instructions2 = copy.deepcopy(instructions)
+                instructions2[i][0] = "jmp"
+                result = execute(instructions2, copy.deepcopy(log), i+instruction[1], accumulator, False)
+                if result is not None:
+                    return result
+
+            i += 1
+    else:
+        return accumulator
+    return None
 
 instructions = []
 for line in input.splitlines():
     command, n = line.split()
     instructions.append([command, int(n)])
 
-for i in range(len(instructions)):
-    flipInstruction(instructions, i)
+instructionLog = [False] * len(instructions)
 
-    instructionLog = [False] * len(instructions)
-
-    accumulator = 0
-    j = 0
-    while j < len(instructions):
-        if instructionLog[j] is True:
-            break
-        instructionLog[j] = True
-
-        if instructions[j][0] == "acc":
-            accumulator += instructions[j][1]
-            j += 1
-        elif instructions[j][0] == "jmp":
-            j += instructions[j][1]
-        elif instructions[j][0] == "nop":
-            j += 1
-    else:
-        print(accumulator)
-        print(i)
-        break
-
-    flipInstruction(instructions, i)
+print(execute(instructions, instructionLog, 0, 0, True))
