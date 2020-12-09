@@ -14,15 +14,12 @@ for i in range(25, len(numbers)):
         n = numbers[i]
         break
 
-found = False
-for j in range(i):
-    for k in range(j+1, i):
-        if sum(numbers[j:k+1]) == n:
-            print(min(numbers[j:k+1]) + max(numbers[j:k+1]))
-            found = True
-            break
-        elif sum(numbers[j:k+1]) > n:
-            break
+start = 0
+end = 1
+while sum(numbers[start:end]) != n:
+    if sum(numbers[start:end]) < n:
+        end += 1
+    elif sum(numbers[start:end]) > n:
+        start += 1
 
-    if found:
-        break
+print(min(numbers[start:end]) + max(numbers[start:end]))
