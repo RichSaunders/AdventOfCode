@@ -25,10 +25,7 @@ def calculate(expression):
 
     while "*" in expression:
         match = multiplicationRE.search(expression)
-        subExpression = match.group(1)
-        subResult = eval(subExpression)
-        expression = expression.replace(subExpression, str(subResult), 1)
-        # expression = expression.replace(match.group(1), str(eval(match.group(1))), 1)
+        expression = expression.replace(match.group(1), str(eval(match.group(1))), 1)
 
     return expression
 
