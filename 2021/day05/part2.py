@@ -13,30 +13,23 @@ def processInput():
 
     return instructions
 
-def applyInstruction(map, instruction):
-    if instruction[0][0] == instruction[1][0]:
-        x = instruction[0][0]
-        start = min(instruction[0][1], instruction[1][1])
-        end = max(instruction[0][1], instruction[1][1])
-        for y in range(start, end+1):
-            map[x,y] += 1
-
-    elif instruction[0][1] == instruction[1][1]:
-        y = instruction[0][1]
-        start = min(instruction[0][0], instruction[1][0])
-        end = max(instruction[0][0], instruction[1][0])
-        for x in range(start, end+1):
-            map[x,y] += 1
-
+def getDelta(start, end):
+    if start < end:
+        return 1
+    elif start > end:
+        return -1
     else:
-        xD = 1 if instruction[0][0] < instruction[1][0] else -1
-        yD = 1 if instruction[0][1] < instruction[1][1] else -1
+        return 0
 
-        position = instruction[0]
-        while position != instruction[1]:
-            map[position] += 1
-            position = (position[0]+xD, position[1]+yD)
-        map[instruction[1]] += 1
+def applyInstruction(map, instruction):
+    xD = getDelta(instruction[0][0], instruction[1][0])
+    yD = getDelta(instruction[0][1], instruction[1][1])
+
+    position = instruction[0]
+    while position != instruction[1]:
+        map[position] += 1
+        position = (position[0]+xD, position[1]+yD)
+    map[instruction[1]] += 1
 
     return map
 
@@ -45,5 +38,4 @@ map = np.zeros((1000, 1000))
 for instruction in instructions:
     applyInstruction(map, instruction)
 
-print(map)
 print(np.count_nonzero(map>=2))
