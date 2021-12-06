@@ -10,6 +10,5 @@ for i in range(80):
     fish = fish[fish!=0]
     fish = np.append(fish, [7]*new + [9]*new)
     fish = fish-1
-    print(i)
 
 print(len(fish))
