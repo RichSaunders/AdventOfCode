@@ -15,12 +15,9 @@ def processInput(input):
     drawnNumbers = input[0].split(",")
 
     boards = []
-    i = 2
-    while i < len(input)-4:
+    for i in range(2, len(input), 6):
         board = " ".join(input[i:i+5])
         boards.append(board.split())
-
-        i += 6
 
     return drawnNumbers, boards
 
