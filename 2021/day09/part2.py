@@ -1,4 +1,3 @@
-import numpy
 import numpy as np
 
 with open("input.txt") as f:
@@ -6,7 +5,7 @@ with open("input.txt") as f:
     input = [list(map(int, x)) for x in input]
     floor = np.array(input)
 
-basins = np.zeros(floor.shape, numpy.int16)
+basins = np.zeros(floor.shape, np.int16)
 next_basin = 1
 
 for y in range(floor.shape[1]):
@@ -40,7 +39,7 @@ for y in range(floor.shape[1]):
                     # There isn't a peak below, so it's in the same basin as current tile
                     basins[x, y+1] = my_basin
 
-basin_counts = numpy.unique(basins, return_counts=True)[1][1:]
+basin_counts = np.unique(basins, return_counts=True)[1][1:]
 basin_counts = sorted(basin_counts, reverse=True)
 
 print(basin_counts[0] * basin_counts[1] * basin_counts[2])
