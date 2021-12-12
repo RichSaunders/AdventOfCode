@@ -16,7 +16,7 @@ def duplicateSmall(route):
 
 def traverse(nodes, route):
     if route[-1] == "end":
-        return [route+["end"]]
+        return [route]
 
     if nodes[route[-1]] == []:
         return []
