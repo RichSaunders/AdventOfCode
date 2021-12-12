@@ -7,7 +7,6 @@ with open("input.txt") as f:
         nodes.setdefault(path[1], []).append(path[0])
 
 def duplicateSmall(route):
-    pass
     for node in route:
         if node.lower() == node and route.count(node) > 1:
             return True
@@ -17,9 +16,6 @@ def duplicateSmall(route):
 def traverse(nodes, route):
     if route[-1] == "end":
         return [route]
-
-    if nodes[route[-1]] == []:
-        return []
 
     paths = []
     for next in nodes[route[-1]]:
